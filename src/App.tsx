@@ -1,41 +1,33 @@
-import { useState, useEffect } from 'react'; 
-import type { Todo } from './types';
-
-
-const LOCAL_STORAGE_KEY = 'react-todo-app-tasks';
+import React, { useState } from 'react';
+import { Todo, FilterType } from './types/Todo';
+import { BackgroundAnimations } from './components/BackgroundAnimations';
+import { Header } from './components/Header';
+import { AddTaskForm } from './components/AddTaskForm';
+import { FilterButtons } from './components/FilterButtons';
+import { Statistics } from './components/Statistics';
+import { TodoList } from './components/TodoList';
+import { ClearCompletedButton } from './components/ClearCompletedButton';
+import { GlobalStyles } from './components/GlobalStyles';
 
 function App() {
-  // Modify the initial state to load from LocalStorage
-  const [todos, setTodos] = useState<Todo[]>(() => {
-    const savedTasks = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (savedTasks) {
-      try {
-        return JSON.parse(savedTasks);
-      } catch (error) {
-        console.error("Failed to parse todos from localStorage", error);
-        return []; 
-      }
-    }
-    return [];
-  });
-  
+  const [todos, setTodos] = useState<Todo[]>([
+    { id: '1', text: 'Welcome to your enhanced todo app!', isCompleted: false, createdAt: new Date() },
+    { id: '2', text: 'Try adding a new task', isCompleted: false, createdAt: new Date() }
+  ]);
   const [taskText, setTaskText] = useState('');
+  const [filter, setFilter] = useState<FilterType>('all');
 
-
-  useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos));
-  }, [todos]); 
-
-  
-  const handleAddTask = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleAddTask = () => {
     if (taskText.trim() === '') return;
+    
     const newTodo: Todo = {
       id: crypto.randomUUID(),
-      text: taskText,
+      text: taskText.trim(),
       isCompleted: false,
+      createdAt: new Date(),
     };
-    setTodos(prevTodos => [...prevTodos, newTodo]);
+    
+    setTodos(prevTodos => [newTodo, ...prevTodos]);
     setTaskText('');
   };
 
@@ -50,52 +42,53 @@ function App() {
   const handleDeleteTask = (id: string) => {
     setTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
   };
-  
- 
+
+  const clearCompleted = () => {
+    setTodos(prevTodos => prevTodos.filter(todo => !todo.isCompleted));
+  };
+
+  const completedCount = todos.filter(todo => todo.isCompleted).length;
+  const activeCount = todos.length - completedCount;
+
   return (
-    <div className="bg-slate-900 min-h-screen w-full flex flex-col items-center pt-10 text-white font-sans">
-      <div className="w-full max-w-xl p-4">
-        <h1 className="text-5xl font-bold text-center mb-8">My To-Do List</h1>
-        <form onSubmit={handleAddTask} className="flex gap-2 mb-8">
-          <input
-            type="text"
-            value={taskText}
-            onChange={(e) => setTaskText(e.target.value)}
-            placeholder="What needs to be done?"
-            className="flex-grow p-3 rounded bg-slate-800 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-sky-500 text-lg"
+    <div className="min-h-screen w-full relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+      <GlobalStyles />
+      <BackgroundAnimations />
+
+      {/* Main content */}
+      <div className="relative z-10 flex flex-col items-center pt-8 px-4 min-h-screen">
+        <div className="w-full max-w-2xl">
+          <Header />
+          
+          <AddTaskForm
+            taskText={taskText}
+            setTaskText={setTaskText}
+            onAddTask={handleAddTask}
           />
-          <button
-            type="submit"
-            className="bg-sky-600 hover:bg-sky-700 p-3 px-6 rounded font-semibold text-lg transition-colors"
-          >
-            Add
-          </button>
-        </form>
-        <ul className="space-y-3">
-          {todos.map(todo => (
-            <li
-              key={todo.id}
-              className={`flex items-center justify-between p-4 rounded-lg transition-colors duration-300 ${
-                todo.isCompleted ? 'bg-green-900/50' : 'bg-slate-800'
-              }`}
-            >
-              <span
-                onClick={() => handleToggleComplete(todo.id)}
-                className={`flex-grow cursor-pointer text-lg ${
-                  todo.isCompleted ? 'line-through text-slate-500' : ''
-                }`}
-              >
-                {todo.text}
-              </span>
-              <button
-                onClick={() => handleDeleteTask(todo.id)}
-                className="bg-red-600 hover:bg-red-700 text-white font-bold py-1 px-3 rounded text-sm transition-colors"
-              >
-                Delete
-              </button>
-            </li>
-          ))}
-        </ul>
+
+          <FilterButtons
+            currentFilter={filter}
+            onFilterChange={setFilter}
+          />
+
+          <Statistics
+            activeCount={activeCount}
+            completedCount={completedCount}
+            totalCount={todos.length}
+          />
+
+          <TodoList
+            todos={todos}
+            filter={filter}
+            onToggleComplete={handleToggleComplete}
+            onDelete={handleDeleteTask}
+          />
+
+          <ClearCompletedButton
+            completedCount={completedCount}
+            onClearCompleted={clearCompleted}
+          />
+        </div>
       </div>
     </div>
   );
