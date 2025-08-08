@@ -1,13 +1,11 @@
-// src/App.tsx
-// Add 'useEffect' to the import from react
 import { useState, useEffect } from 'react'; 
 import type { Todo } from './types';
 
-// The key we'll use to store our todos in LocalStorage
+
 const LOCAL_STORAGE_KEY = 'react-todo-app-tasks';
 
 function App() {
-  // NEW: Modify the initial state to load from LocalStorage
+  // Modify the initial state to load from LocalStorage
   const [todos, setTodos] = useState<Todo[]>(() => {
     const savedTasks = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (savedTasks) {
@@ -15,7 +13,7 @@ function App() {
         return JSON.parse(savedTasks);
       } catch (error) {
         console.error("Failed to parse todos from localStorage", error);
-        return []; // Return empty array if parsing fails
+        return []; 
       }
     }
     return [];
@@ -23,13 +21,12 @@ function App() {
   
   const [taskText, setTaskText] = useState('');
 
-  // NEW: This useEffect will run whenever the 'todos' state changes
-  // It saves the current list of todos to LocalStorage
+
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos));
-  }, [todos]); // The effect depends on the 'todos' array, so it runs when todos change
+  }, [todos]); 
 
-  // ... (all the handler functions: handleAddTask, handleToggleComplete, handleDeleteTask are IDENTICAL to before)
+  
   const handleAddTask = (e: React.FormEvent) => {
     e.preventDefault();
     if (taskText.trim() === '') return;
@@ -54,7 +51,7 @@ function App() {
     setTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
   };
   
-  // ... (the entire JSX return statement is IDENTICAL to before)
+ 
   return (
     <div className="bg-slate-900 min-h-screen w-full flex flex-col items-center pt-10 text-white font-sans">
       <div className="w-full max-w-xl p-4">
