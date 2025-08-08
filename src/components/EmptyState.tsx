@@ -1,11 +1,10 @@
-import React from 'react';
-import { FilterType } from '../types/Todo';
+import type { FilterType } from '../types/Todo';
 
 interface EmptyStateProps {
   filter: FilterType;
 }
 
-export const EmptyState: React.FC<EmptyStateProps> = ({ filter }) => {
+const EmptyState = ({ filter }: EmptyStateProps) => {
   const getEmptyStateMessage = () => {
     switch (filter) {
       case 'active':
@@ -39,3 +38,5 @@ export const EmptyState: React.FC<EmptyStateProps> = ({ filter }) => {
     </div>
   );
 };
+
+export default EmptyState;

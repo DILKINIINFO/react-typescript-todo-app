@@ -1,6 +1,4 @@
-import React from 'react';
-
-export const Header: React.FC = () => {
+const Header = () => {
   return (
     <div className="text-center mb-12">
       <h1 className="text-6xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-4 animate-pulse">
@@ -10,3 +8,5 @@ export const Header: React.FC = () => {
     </div>
   );
 };
+
+export default Header;

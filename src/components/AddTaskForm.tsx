@@ -1,17 +1,14 @@
-import React from 'react';
-import { Plus } from 'lucide-react';
-
 interface AddTaskFormProps {
   taskText: string;
   setTaskText: (text: string) => void;
   onAddTask: () => void;
 }
 
-export const AddTaskForm: React.FC<AddTaskFormProps> = ({
+const AddTaskForm = ({
   taskText,
   setTaskText,
   onAddTask
-}) => {
+}: AddTaskFormProps) => {
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       onAddTask();
@@ -33,10 +30,14 @@ export const AddTaskForm: React.FC<AddTaskFormProps> = ({
           onClick={onAddTask}
           className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 p-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center gap-2 text-white"
         >
-          <Plus size={20} />
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+          </svg>
           Add
         </button>
       </div>
     </div>
   );
 };
+
+export default AddTaskForm;

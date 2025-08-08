@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
-import { Todo, FilterType } from './types/Todo';
-import { BackgroundAnimations } from './components/BackgroundAnimations';
-import { Header } from './components/Header';
-import { AddTaskForm } from './components/AddTaskForm';
-import { FilterButtons } from './components/FilterButtons';
-import { Statistics } from './components/Statistics';
-import { TodoList } from './components/TodoList';
-import { ClearCompletedButton } from './components/ClearCompletedButton';
-import { GlobalStyles } from './components/GlobalStyles';
+import { useState } from 'react';
+import type { Todo, FilterType } from './types/Todo';
+import BackgroundAnimations from './components/BackgroundAnimations';
+import Header from './components/Header';
+import AddTaskForm from './components/AddTaskForm';
+import FilterButtons from './components/FilterButtons';
+import Statistics from './components/Statistics';
+import TodoList from './components/TodoList';
+import ClearCompletedButton from './components/ClearCompletedButton';
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>([
@@ -52,7 +51,6 @@ function App() {
 
   return (
     <div className="min-h-screen w-full relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      <GlobalStyles />
       <BackgroundAnimations />
 
       {/* Main content */}

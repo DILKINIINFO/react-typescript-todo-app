@@ -1,16 +1,14 @@
-import React from 'react';
-
 interface StatisticsProps {
   activeCount: number;
   completedCount: number;
   totalCount: number;
 }
 
-export const Statistics: React.FC<StatisticsProps> = ({
+const Statistics = ({
   activeCount,
   completedCount,
   totalCount
-}) => {
+}: StatisticsProps) => {
   return (
     <div className="flex justify-center gap-6 mb-8 text-slate-300">
       <div className="text-center">
@@ -28,3 +26,5 @@ export const Statistics: React.FC<StatisticsProps> = ({
     </div>
   );
 };
+
+export default Statistics;

@@ -1,6 +1,4 @@
-import React from 'react';
-
-export const BackgroundAnimations: React.FC = () => {
+const BackgroundAnimations = () => {
   // Floating particles animation
   const particles = Array.from({ length: 20 }, (_, i) => (
     <div
@@ -35,4 +33,6 @@ export const BackgroundAnimations: React.FC = () => {
       </div>
     </div>
   );
-}
+};
+
+export default BackgroundAnimations;

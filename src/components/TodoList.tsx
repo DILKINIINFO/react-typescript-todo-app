@@ -1,7 +1,6 @@
-import React from 'react';
-import { Todo, FilterType } from '../types/Todo';
-import { TodoItem } from './TodoItem';
-import { EmptyState } from './EmptyState';
+import type  { Todo, FilterType } from '../types/Todo';
+import TodoItem from './TodoItem';
+import EmptyState from './EmptyState';
 
 interface TodoListProps {
   todos: Todo[];
@@ -10,12 +9,12 @@ interface TodoListProps {
   onDelete: (id: string) => void;
 }
 
-export const TodoList: React.FC<TodoListProps> = ({
+const TodoList = ({
   todos,
   filter,
   onToggleComplete,
   onDelete
-}) => {
+}: TodoListProps) => {
   const filteredTodos = todos.filter(todo => {
     if (filter === 'active') return !todo.isCompleted;
     if (filter === 'completed') return todo.isCompleted;
@@ -40,3 +39,5 @@ export const TodoList: React.FC<TodoListProps> = ({
     </div>
   );
 };
+
+export default TodoList;

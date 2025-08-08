@@ -1,15 +1,14 @@
-import React from 'react';
-import { FilterType } from '../types/Todo';
+import type{ FilterType } from '../types/Todo';
 
 interface FilterButtonsProps {
   currentFilter: FilterType;
   onFilterChange: (filter: FilterType) => void;
 }
 
-export const FilterButtons: React.FC<FilterButtonsProps> = ({
+const FilterButtons = ({
   currentFilter,
   onFilterChange
-}) => {
+}: FilterButtonsProps) => {
   const filters: FilterType[] = ['all', 'active', 'completed'];
 
   return (
@@ -30,3 +29,5 @@ export const FilterButtons: React.FC<FilterButtonsProps> = ({
     </div>
   );
 };
+
+export default FilterButtons;

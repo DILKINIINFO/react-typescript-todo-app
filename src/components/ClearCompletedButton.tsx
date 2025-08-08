@@ -1,14 +1,12 @@
-import React from 'react';
-
 interface ClearCompletedButtonProps {
   completedCount: number;
   onClearCompleted: () => void;
 }
 
-export const ClearCompletedButton: React.FC<ClearCompletedButtonProps> = ({
+const ClearCompletedButton = ({
   completedCount,
   onClearCompleted
-}) => {
+}: ClearCompletedButtonProps) => {
   if (completedCount === 0) {
     return null;
   }
@@ -24,3 +22,5 @@ export const ClearCompletedButton: React.FC<ClearCompletedButtonProps> = ({
     </div>
   );
 };
+
+export default ClearCompletedButton;
